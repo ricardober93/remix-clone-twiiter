@@ -1,11 +1,11 @@
 import type { V2_MetaFunction } from "@remix-run/node";
 import { json, LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-
-import { useOptionalUser } from "~/utils";
 import { getTwits } from "~/models/twit.server";
+import { Sidebar } from "~/components/sidebar";
+import Banner from "~/components/banner";
 
-export const meta: V2_MetaFunction = () => [{ title: "Remix Notes" }];
+export const meta: V2_MetaFunction = () => [{ title: "Remix Twits" }];
 
 export const loader = async ({ request }: LoaderArgs) => {
   const twitsListItems = await getTwits();
@@ -14,21 +14,25 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function Index() {
   const data = useLoaderData<typeof loader>();
-  const user = useOptionalUser();
   return (
-    <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      {
-        data.twitsListItems?.length === 0 ? (
-          <p className="p-4">No notes yet</p>
-        ) : (
-          <div className="flex flex-col gap-3">
-            { data.twitsListItems?.map((twit) => (
-              <div key={twit.id}>{twit.id} - {twit.body}</div>
+      <main className="min-h-screen bg-white w-full flex gap-3 lg:max-w-md lg:mx-auto py-3">
+        <div className="flex-1 p-2">
+          <h1 className="text-lg font-bold"> Explore </h1>
+          <section className={"grid gap-4 p-6"}>
+            {
+              data.twitsListItems.map((twit) => (
+                <div key={twit.id}>
+                  <div className="flex gap-3 items-end">
+                    <h2 className="text-gray-600 font-medium">{twit.user.name}</h2>
+                    <p className={"text-sm text-gray-400"}> {twit.createdAt} </p>
+                  </div>
+                  <p className="ml-3">{twit.body}</p>
+                </div>
 
-            )) }
-          </div>
-        )
-      }
-    </main>
+              ))
+            }
+          </section>
+        </div>
+      </main>
   );
 }

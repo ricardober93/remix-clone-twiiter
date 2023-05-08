@@ -12,6 +12,8 @@ import {
 
 import { getUser } from "~/session.server";
 import stylesheet from "~/tailwind.css";
+import { Sidebar } from "~/components/sidebar";
+import Banner from "~/components/banner";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,7 +34,11 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
+      <main className="min-h-screen bg-white w-full flex gap-3 lg:max-w-md lg:mx-auto py-3">
+        <Sidebar />
         <Outlet />
+        <Banner />
+      </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
