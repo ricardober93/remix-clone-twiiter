@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import { getTwits } from "~/models/twit.server";
 import { Sidebar } from "~/components/sidebar";
 import Banner from "~/components/banner";
+import { TwitItem } from "~/components/TwitItem";
 
 export const meta: V2_MetaFunction = () => [{ title: "Remix Twits" }];
 
@@ -20,16 +21,10 @@ export default function Index() {
           <h1 className="text-lg font-bold"> Explore </h1>
           <section className={"grid gap-4 p-6"}>
             {
+              data.twitsListItems.length > 0 ?
               data.twitsListItems.map((twit) => (
-                <div key={twit.id}>
-                  <div className="flex gap-3 items-end">
-                    <h2 className="text-gray-600 font-medium">{twit.user.name}</h2>
-                    <p className={"text-sm text-gray-400"}> {twit.createdAt} </p>
-                  </div>
-                  <p className="ml-3">{twit.body}</p>
-                </div>
-
-              ))
+                <TwitItem key={twit.id} twit={twit} />
+              )) : <p> No hay Twits Disponibles </p>
             }
           </section>
         </div>

@@ -21,11 +21,9 @@ export function getTwits() {
 }
 
 
-export function getTwitsById(id: string) {
+export function getTwitsById(userId: string) {
   return prisma.twit.findMany({
-    where: {
-      id,
-    },
+    where: { userId },
     select: {
       id: true,
       body: true,
