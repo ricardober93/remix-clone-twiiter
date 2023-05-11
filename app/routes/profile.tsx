@@ -1,10 +1,12 @@
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
+import { ActionArgs, json, LoaderArgs, redirect, V2_MetaFunction } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
 import { createTwit, getTwits, getTwitsById } from "~/models/twit.server";
 import { useUser } from "~/utils";
 import { TwitItem } from "~/components/TwitItem";
+
+export const meta: V2_MetaFunction = () => [{ title: "Profile Twits" }];
 
 export const action = async ({ request }: ActionArgs) => {
   const userId = await requireUserId(request);
@@ -40,7 +42,7 @@ export default function ProfilePage() {
   }, [actionData]);
 
   return (
-    <section className={"w-full p-6"}>
+    <section className={"lg:w-4/5  p-6"}>
       <Form
         method="post"
         style={{

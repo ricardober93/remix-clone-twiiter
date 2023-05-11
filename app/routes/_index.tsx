@@ -16,9 +16,8 @@ export const loader = async ({ request }: LoaderArgs) => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
   return (
-      <main className="min-h-screen bg-white w-full flex gap-3 lg:max-w-md lg:mx-auto py-3">
-        <div className="flex-1 p-2">
-          <h1 className="text-lg font-bold"> Explore </h1>
+        <div className="flex-1 p-2 lg:w-4/5">
+          <h1 className="text-lg font-bold"> Inicio </h1>
           <section className={"grid gap-4 p-6"}>
             {
               data.twitsListItems.length > 0 ?
@@ -28,6 +27,5 @@ export default function Index() {
             }
           </section>
         </div>
-      </main>
   );
 }

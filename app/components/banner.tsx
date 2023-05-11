@@ -7,9 +7,9 @@ export default function Banner() {
     <>
       {
         user.id === null ?
-          <div className=" sm:hidden w-full absolute bottom-0 left-0 flex justify-center items-center">
-            <Link to="/auth/login" className="w-1/2 bg-blue-200 text-blue-600 text-center py-3"> Login </Link>
-            <Link to="/auth/register" className="w-1/2 bg-blue-600 text-blue-200 text-center py-3"> register </Link>
+          <div className="absolute bottom-0 left-0 flex w-full items-center justify-center sm:hidden">
+            <Link to="/auth/login" className="w-1/2 bg-blue-200 py-3 text-center text-blue-600"> Login </Link>
+            <Link to="/auth/register" className="w-1/2 bg-blue-600 py-3 text-center text-blue-200"> register </Link>
           </div>
           : null
       }

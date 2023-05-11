@@ -34,7 +34,7 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-      <main className="min-h-screen bg-white w-full flex gap-3 lg:max-w-md lg:mx-auto py-3">
+      <main className="flex min-h-screen w-full gap-3 bg-white py-3 lg:mx-auto">
         <Sidebar />
         <Outlet />
         <Banner />
