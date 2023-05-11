@@ -5,6 +5,7 @@ import { requireUserId } from "~/session.server";
 import { createTwit, getTwits, getTwitsById } from "~/models/twit.server";
 import { useUser } from "~/utils";
 import { TwitItem } from "~/components/TwitItem";
+import UserInfo from "~/components/UserInfo";
 
 export const meta: V2_MetaFunction = () => [{ title: "Profile Twits" }];
 
@@ -42,7 +43,9 @@ export default function ProfilePage() {
   }, [actionData]);
 
   return (
-    <section className={"lg:w-4/5  p-6"}>
+    <section className={'flex flex-col'}>
+      <UserInfo />
+    <section className={"lg:w-4/5  py-10 px-3"}>
       <Form
         method="post"
         style={{
@@ -91,6 +94,7 @@ export default function ProfilePage() {
         )) : (<div>No hay twits</div>)
       }
 
+    </section>
     </section>
   );
 }
