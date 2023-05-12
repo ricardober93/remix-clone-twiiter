@@ -16,6 +16,9 @@ export function getTwits() {
           name: true,
         },
       },
+    },
+    orderBy: {
+      createdAt: "desc",
     }
   });
 }
