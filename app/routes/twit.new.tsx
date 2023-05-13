@@ -1,13 +1,8 @@
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { useEffect, useRef } from "react";
-import { ActionArgs, json, LoaderArgs, redirect, V2_MetaFunction } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { ActionArgs, json, redirect } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
-import { createTwit, getTwits, getTwitsById } from "~/models/twit.server";
-import { useUser } from "~/utils";
-import { TwitItem } from "~/components/TwitItem";
-import UserInfo from "~/components/UserInfo";
-
-export const meta: V2_MetaFunction = () => [{ title: "Profile Twits" }];
+import { createTwit } from "~/models/twit.server";
+import { useEffect, useRef } from "react";
 
 export const action = async ({ request }: ActionArgs) => {
   const userId = await requireUserId(request);
@@ -24,15 +19,8 @@ export const action = async ({ request }: ActionArgs) => {
   const note = await createTwit({ body, userId });
 
   return redirect(`/profile`);
-}
-
-export const loader = async ({ request }: LoaderArgs) => {
-  const userId = await requireUserId(request);
-  const listTwits = await getTwitsById(userId);
-  return json({ listTwits });
 };
-export default function ProfilePage() {
-  const data = useLoaderData<typeof loader>();
+export default function NewTwitPage() {
   const actionData = useActionData<typeof action>();
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
@@ -43,22 +31,19 @@ export default function ProfilePage() {
   }, [actionData]);
 
   return (
-    <section className={'flex flex-col'}>
-      <UserInfo />
-    <section className={"lg:w-4/5  py-10 px-3"}>
+    <section className={"px-3  py-10 lg:w-4/5"}>
       <Form
         method="post"
         style={{
           display: "flex",
           flexDirection: "column",
           gap: 8,
-          width: "100%"
-        }}>
-
-
+          width: "100%",
+        }}
+      >
         <div>
           <label className="flex w-full flex-col gap-1">
-            <span className={"font-bold text-xl "}>¿Qué estas Pensando? </span>
+            <span className={"text-xl font-bold "}>¿Qué estas Pensando? </span>
             <textarea
               ref={bodyRef}
               name="body"
@@ -80,21 +65,12 @@ export default function ProfilePage() {
         <div className="text-right">
           <button
             type="submit"
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="rounded-3xl bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
           >
             Twittear
           </button>
         </div>
       </Form>
-
-      {
-        data.listTwits.length > 0 ?
-        data.listTwits.map( (twit) => (
-         <TwitItem key={twit.id} twit={twit} />
-        )) : (<div>No hay twits</div>)
-      }
-
-    </section>
     </section>
   );
 }

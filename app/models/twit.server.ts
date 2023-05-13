@@ -4,7 +4,6 @@ import { prisma } from "~/db.server";
 
 export type { Twit } from "@prisma/client";
 
-
 export function getTwits() {
   return prisma.twit.findMany({
     select: {
@@ -14,15 +13,15 @@ export function getTwits() {
       user: {
         select: {
           name: true,
+          photoUser: true,
         },
       },
     },
     orderBy: {
       createdAt: "desc",
-    }
+    },
   });
 }
-
 
 export function getTwitsById(userId: string) {
   return prisma.twit.findMany({
@@ -36,7 +35,7 @@ export function getTwitsById(userId: string) {
           name: true,
         },
       },
-    }
+    },
   });
 }
 

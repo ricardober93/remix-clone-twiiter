@@ -1,36 +1,45 @@
-import FormDialogUpdateUserInfo from "~/components/FormDialogUpdateUserInfo";
+import { User } from "@prisma/client";
+import { Link } from "@remix-run/react";
 
-export default function UserInfo() {
-        return (
-          <>
-            <section className="relative h-1/6 w-full mb-6 ">
-              <img
-                className={'h-full bg-cover object-cover w-full'}
-                src={'https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'}
-                alt="cover_info" />
+export default function UserInfo({ user }: { user: User }) {
+  return (
+    <>
+      <section className="relative mb-6 h-1/6 w-full ">
+        <img
+          className={"h-full w-full bg-cover object-cover"}
+          src={
+            user?.backgroundUser
+              ? user?.backgroundUser
+              : "https://placehold.co/600x400"
+          }
+          alt="cover_info"
+        />
 
-              <img
-                className={'absolute h-24 bg-cover object-cover w-24 ml-5 -mt-10 border-4 border-solid border-white rounded-full'}
-                src={'https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'}
-                alt="cover_info" />
-            </section>
-            <section className="flex flex-col gap-3 mt-10">
-              <div className="flex flex-col">
-                <section className="flex w-full justify-between items-center pr-6">
-
-                <h1 className="text-3xl font-bold">
-                  Ricardo Bermudez
-                </h1>
-                  <FormDialogUpdateUserInfo />
-                </section>
-                <h6 className="text-lg text-gray-400">
-                  @ricardob
-                </h6>
-              </div>
-              <p>
-                Bienvenido a mi página de Twittear, esta es la página principal de mia aplicación.
-              </p>
-            </section>
-          </>
-        );
-      }
+        <img
+          className={
+            "absolute -mt-10 ml-5 h-24 w-24 rounded-full border-4 border-solid border-white bg-cover object-cover"
+          }
+          src={
+            user?.photoUser ? user?.photoUser : "https://placehold.co/300x300"
+          }
+          alt="cover_info"
+        />
+      </section>
+      <section className="mt-10 flex flex-col gap-3">
+        <div className="flex flex-col">
+          <section className="flex w-full items-center justify-between pr-6">
+            <h1 className="text-3xl font-bold">{user?.name}</h1>
+            <Link
+              to={"/profile/edit/"}
+              className="rounded-3xl border border-solid border-gray-700 px-4 py-2 font-medium text-gray-700 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              edit profile
+            </Link>
+          </section>
+          <h6 className="text-lg text-gray-400">@{user?.username}</h6>
+        </div>
+        <p>{user?.descriptionUser}</p>
+      </section>
+    </>
+  );
+}
