@@ -29,6 +29,34 @@ export async function createUser(email: User["email"], name: User["name"],passwo
   });
 }
 
+export async function editUserInfo({
+   id,
+   name,
+   username,
+   photoUser,
+   backgroundUser,
+   descriptionUser
+ }: {
+  id:  User["id"],
+  name: User["name"],
+  username: User["username"] | null,
+  photoUser: User["photoUser"] | null,
+  backgroundUser: User["backgroundUser"]| null,
+  descriptionUser: User["descriptionUser"] | null
+}) {
+  return prisma.user.update({
+    where: { id },
+    data: {
+      name,
+      username,
+      photoUser,
+      backgroundUser,
+      descriptionUser,
+    },
+  });
+
+}
+
 export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
 }

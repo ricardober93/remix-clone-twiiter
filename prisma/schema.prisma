@@ -12,6 +12,11 @@ model User {
   name  String?
   email String @unique
 
+  username String?
+  photoUser String?
+  backgroundUser String?
+  descriptionUser String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
