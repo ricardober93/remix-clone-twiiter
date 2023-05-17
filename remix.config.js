@@ -8,7 +8,7 @@ module.exports = {
     v2_routeConvention: true,
   },
   serverPlatform: "node",
-  serverModuleFormat: "esm",
+  serverModuleFormat: "cjs",
   ignoredRouteFiles: ["**/.*", "**/*.test.{js,jsx,ts,tsx}"],
   postcss: true,
   tailwind: true,
