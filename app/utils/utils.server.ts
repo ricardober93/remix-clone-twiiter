@@ -24,7 +24,7 @@ export async function uploadImageToCloudinary(data: AsyncIterable<Uint8Array>) {
             reject(error);
             return;
           }
-          resolve(result);
+          resolve(result!);
         }
       );
       await writeAsyncIterableToWritable(data, uploadStream);

@@ -1,11 +1,12 @@
 import { NavLink, useLoaderData } from "@remix-run/react";
-import { json, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
 import { getTwitsById } from "~/models/twit.server";
 import { TwitItem } from "~/components/TwitItem";
 import UserInfo from "~/components/UserInfo";
 import { getUser } from "~/models/user.server";
-import { ArrowDownLeft, ArrowLeft } from "react-feather";
+import { ArrowLeft } from "react-feather";
 
 export const meta: V2_MetaFunction = () => [{ title: "Profile Twits" }];
 
@@ -25,7 +26,7 @@ export default function ProfilePage() {
         </NavLink>
         <h3 className="font-bold">Perfil</h3>
       </div>
-      <UserInfo user={data?.userInfo} />
+      {data.userInfo && <UserInfo user={data?.userInfo} />}
       {data.listTwits.length > 0 ? (
         data.listTwits.map((twit) => <TwitItem key={twit.id} twit={twit} />)
       ) : (

@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { Link } from "@remix-run/react";
 
-export default function UserInfo({ user }: { user: User }) {
+export default function UserInfo({ user }: { user: Pick<User, any> }) {
   return (
     <>
       <section className="relative mb-6 h-1/6 w-full ">

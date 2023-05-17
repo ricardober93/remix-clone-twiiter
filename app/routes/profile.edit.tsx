@@ -1,6 +1,5 @@
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useEffect, useRef } from "react";
 import {
   ActionArgs,
   json,
@@ -13,8 +12,6 @@ import {
 import { requireUserId } from "~/session.server";
 import { uploadImageToCloudinary } from "~/utils/utils.server";
 import { editUserInfo, getUser } from "~/models/user.server";
-import invariant from "tiny-invariant";
-import { getNote } from "~/models/note.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const userId = await requireUserId(request);
@@ -63,7 +60,21 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (typeof photoUser !== "string") {
     return json(
-      { errors: { body: null, title: "username is required" } },
+      { errors: { body: null, title: "photoUser is required" } },
+      { status: 400 }
+    );
+  }
+
+  if (typeof backgroundUser !== "string") {
+    return json(
+      { errors: { body: null, title: "backgroundUser is required" } },
+      { status: 400 }
+    );
+  }
+
+  if (typeof descriptionUser !== "string") {
+    return json(
+      { errors: { body: null, title: "descriptionUser is required" } },
       { status: 400 }
     );
   }

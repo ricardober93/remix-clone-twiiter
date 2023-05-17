@@ -16,7 +16,6 @@ export const loader = async ({ request }: LoaderArgs) => {
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
   const email = formData.get("email");
-  const name = formData.get("name");
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/profile");
 
@@ -54,7 +53,7 @@ export const action = async ({ request }: ActionArgs) => {
     );
   }
 
-  const user = await createUser(email, name, password);
+  const user = await createUser(email, password);
 
   return createUserSession({
     redirectTo,
@@ -79,8 +78,6 @@ export default function AuthRegister() {
       emailRef.current?.focus();
     } else if (actionData?.errors?.password) {
       passwordRef.current?.focus();
-    }else if (actionData?.errors?.name) {
-      nameRef.current?.focus();
     }
   }, [actionData]);
 
@@ -111,34 +108,6 @@ export default function AuthRegister() {
               {actionData?.errors?.email ? (
                 <div className="pt-1 text-red-700" id="email-error">
                   {actionData.errors.email}
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-            Name
-            </label>
-            <div className="mt-1">
-              <input
-                ref={nameRef}
-                id="name"
-                required
-                autoFocus={true}
-                name="name"
-                type="text"
-                autoComplete="text"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="name-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.name ? (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.name}
                 </div>
               ) : null}
             </div>
